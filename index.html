@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>minivault</title>
+		<title>Minivault</title>
 		<script>
 			const mode = 'AES-GCM';
 			const length = 256;
@@ -72,9 +72,13 @@
 			min-height:230px;
 			margin:0;
 			padding:10px;
-			margin-top:3em;
 		}
-		textarea, input[type=text], input[type=password]{
+		h1{
+			font-size:1.1em
+		}
+		textarea,
+		input[type=text],
+		input[type=password]{
 			border:0;
 			display:block;
 			width:100%;
@@ -96,6 +100,7 @@
 		</style>
 	</head>
 	<body>
+		<h1>🔒 Minivault</h1>
 		<form action="create" method="get">
 			<h1>Encrypt</h1>
 			<label>Your Secrets:<br>
@@ -104,7 +109,7 @@
 			<label>Password (min 4)<br>
 				<input autocomplete="off" required name="password" type="text" maxlength="256"  minlength="4"/>
 			</label>
-			<input type="submit" value="create"/> 
+			<input type="submit" value="create"/>
 			<span name="hash"></span>
 		</form>
 
@@ -143,7 +148,6 @@
 						iv: fromHexaToUint8Array(parts[0]),
 						cipherText: fromHexaToUint8Array(parts[1]),
 					}
-					console.dir(encripted)
 					const decrypted = await decrypt(encripted, password, mode, length);
 					form.querySelector("[name=secret]").textContent = decrypted
 				} catch (e) {
