@@ -1,6 +1,5 @@
 {
   "manifest_version": 2,
-  "update_url": "https://raw.githubusercontent.com/hankpillow/minivault/master/updates.xml",
   "name": "Minivault",
   "description": "Encrypt secrets with password to share.",
   "version": "1.0",
