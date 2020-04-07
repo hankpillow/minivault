@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+    "name": "Minivault",
+    "description": "Encrypt secrets with password and share with your team safely",
+    "version": "1.0",
+    "icons": {
+      "16": "assets/32.png",
+      "32": "assets/32.png",
+      "48": "assets/48.png",
+      "128": "assets/128.png"
+    },
+    "browser_action": {
+      "default_popup": "popup.html"
+    }
+}
