@@ -2,55 +2,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Minivault</title>
-		<style>
-		* {
-			font-size:1em;
-			vertical-align:top;
-			font-family:Mono;
-		}
-		form {
-			display:none;
-			background-color:lightgray;
-			width:320px;
-			margin:0;
-			padding:10px;
-		}
-		h1{ font-size:1.1em }
-		textarea,
-		input[type=text],
-		input[type=password]{
-			border:0;
-			display:block;
-			width:100%;
-			margin-bottom:15px
-		}
-		span[name=hash]{
-			margin:10 0;
-			width:100%;
-			word-wrap:anywhere;
-			display:block;
-			color:darkblue;
-		}
-		pre[name=secret] {
-			width:100%;
-			display:block;
-			overflow:auto;
-			color:darkblue;
-		}
-		nav a {
-			padding:3px;
-			color:darkred;
-			text-decoration:none;
-			display:inline-block;
-			background-color:white;
-		}
-		.-off { display:none }
-		a.-on{ background-color:lightgray; }
-		form.-on{ 
-			background-color:lightgray; 
-			display:block
-		}
-		</style>
+		<link rel="stylesheet" href="style.css">
 	</head>
 	<body>
 		<h1>Minivault</h1>
@@ -65,8 +17,7 @@
 			<span name="hash"></span>
 		</form>
 		<form name="decrypt">
-				<input required  placeholder="hash to decrypt" autocomplete="off" name="hash" type="text" minlength="1" size="16" />
-			</label>
+			<input required  placeholder="hash to decrypt" autocomplete="off" name="hash" type="text" minlength="1" size="16" />
 			<input required  placeholder="password (min 4)" autocomplete="off" name="password" type="password" minlength="4"/>
 			<input type="submit" value="view"/>
 			<pre name="secret"></pre>
