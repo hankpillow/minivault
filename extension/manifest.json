@@ -2,9 +2,9 @@
   "manifest_version": 2,
   "name": "Minivault",
   "description": "Encrypt secrets with password to share.",
-  "version": "1.0",
+  "version": "1.1",
   "icons": {
-    "16": "assets/32.png",
+    "16": "assets/16.png",
     "32": "assets/32.png",
     "48": "assets/48.png",
     "128": "assets/128.png"

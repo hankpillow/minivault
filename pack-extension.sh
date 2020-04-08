@@ -1,3 +1,4 @@
 #!/bin/bash
-zip -v -r -FS minivault.zip "extension/*" 
+cd extension
+zip -vrFS ../minivault.zip ./*
 
