@@ -3,8 +3,21 @@ const btnDecrypt = this.document.querySelector("a[href=decrypt]")
 const tabEncrypt = this.document.querySelector("form[name=encrypt]")
 const tabDecrypt = this.document.querySelector("form[name=decrypt]")
 
-const klass = "-on"
+function bindFields(form, fields, result) {
+  Array
+    .from(form.querySelectorAll(fields))
+    .map(bindReset(form.querySelector(result)))
+}
+
+function bindReset(ele){
+  console.log( "bind reset", ele)
+  return node => {
+    node.onkeydown = () => ele.textContent = ""
+  }
+}
+
 function toggleTab(event) {
+  const klass = "-on"
   event.preventDefault()
   btnEncrypt.classList.toggle(klass)
   btnDecrypt.classList.toggle(klass)
@@ -12,7 +25,7 @@ function toggleTab(event) {
   tabDecrypt.classList.toggle(klass)
 }
 
-tabEncrypt.addEventListener("submit", async event => {
+async function createHash(event) {
   event.preventDefault()
   const form = event.target
   const secret = form.querySelector("[name=secret]").value.trim()
@@ -20,16 +33,12 @@ tabEncrypt.addEventListener("submit", async event => {
   const encripted = await encrypt(secret, password, mode, length, ivLength)
   const hash = fromUint8ArrayToHexa(encripted.iv) + ";;" +  fromArrayBufferToHexa(encripted.cipherText)
   form.reset()
-  const result = form.querySelector("[name=hash]") 
-  result.textContent = hash.trim() 
+  const result = form.querySelector("[name=hash]")
+  result.textContent = hash.trim()
   result.focus()
-})
-
-function resetResult(name){
-  this.document.querySelector(`[name=${name}]`).textContent =  ""
 }
 
-tabDecrypt.addEventListener("submit", async event => {
+async function decodeHash(event) {
   event.preventDefault()
   const form = event.target
   const hash = form.querySelector("[name=hash]").value.trim();
@@ -48,7 +57,14 @@ tabDecrypt.addEventListener("submit", async event => {
     console.warn(e)
   }
   form.reset()
-})
+}
+
+// ----
+tabEncrypt.addEventListener("submit", createHash)
+tabDecrypt.addEventListener("submit", decodeHash)
+
+bindFields(tabEncrypt, "[name=secret],[name=password]", "[name=hash]")
+bindFields(tabDecrypt, "[name=hash],[name=password]", "[name=secret]")
 
 btnEncrypt.addEventListener("click", toggleTab)
 btnDecrypt.addEventListener("click", toggleTab)
