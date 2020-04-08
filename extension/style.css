@@ -10,7 +10,9 @@ form {
 	margin:0;
 	padding:10px;
 }
-h1{ font-size:1.1em }
+h1{
+	font-size:1.1em 
+}
 textarea,
 input[type=text],
 input[type=password]{
@@ -19,18 +21,22 @@ input[type=password]{
 	width:100%;
 	margin-bottom:15px
 }
-span[name=hash]{
-	margin:10 0;
-	width:100%;
-	word-wrap:anywhere;
+textarea[name=hash]{
 	display:block;
+	margin:10px 0;
+	word-wrap:anywhere;
+	padding:10px;
 	color:darkblue;
+	background:beige;
 }
 pre[name=secret] {
-	width:100%;
+	margin:10px 0;
 	display:block;
+	background:beige;
+	min-height:1em;
 	overflow:auto;
 	color:darkblue;
+	padding:5px;
 }
 nav a {
 	padding:3px;

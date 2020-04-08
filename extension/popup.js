@@ -19,9 +19,15 @@ tabEncrypt.addEventListener("submit", async event => {
   const password = form.querySelector("[name=password]").value.trim()
   const encripted = await encrypt(secret, password, mode, length, ivLength)
   const hash = fromUint8ArrayToHexa(encripted.iv) + ";;" +  fromArrayBufferToHexa(encripted.cipherText)
-  form.querySelector("[name=hash]").textContent = hash.trim()
   form.reset()
+  const result = form.querySelector("[name=hash]") 
+  result.textContent = hash.trim() 
+  result.focus()
 })
+
+function resetResult(name){
+  this.document.querySelector(`[name=${name}]`).textContent =  ""
+}
 
 tabDecrypt.addEventListener("submit", async event => {
   event.preventDefault()

@@ -11,14 +11,14 @@
 			<a href="decrypt">🔓 Decrypt</a>
 		</nav>
 		<form name="encrypt" class="-on">
-			<textarea placeholder="Your Secrets!" autocomplete="off" required name="secret"   type="text" maxlength="2056" minlength="1" ></textarea>
-			<input placeholder="password (min 4)" autocomplete="off" required name="password" type="text" maxlength="256"  minlength="4"/>
+			<textarea onkeydown="resetResult('hash');" placeholder="Your Secrets!" autocomplete="off" required name="secret" maxlength="2056" minlength="1" ></textarea>
+			<input onkeydown="resetResult('hash');" placeholder="password (min 4)" autocomplete="off" required name="password" type="text" maxlength="256"  minlength="4"/>
 			<input type="submit" value="create"/>
-			<span name="hash"></span>
+			<textarea disabled placeholder="hash" autocomplete="off" name="hash" maxlength="2056" minlength="1" ></textarea>
 		</form>
 		<form name="decrypt">
-			<input required  placeholder="hash to decrypt" autocomplete="off" name="hash" type="text" minlength="1" size="16" />
-			<input required  placeholder="password (min 4)" autocomplete="off" name="password" type="password" minlength="4"/>
+			<input onkeydown="resetResult('secret');" required  placeholder="hash to decrypt" autocomplete="off" name="hash" type="text" minlength="1" size="16" />
+			<input onkeydown="resetResult('secret');" required  placeholder="password (min 4)" autocomplete="off" name="password" type="password" minlength="4"/>
 			<input type="submit" value="view"/>
 			<pre name="secret"></pre>
 		</form>
