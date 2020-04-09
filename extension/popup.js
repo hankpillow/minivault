@@ -10,7 +10,6 @@ function bindFields(form, fields, result) {
 }
 
 function bindReset(ele){
-  console.log( "bind reset", ele)
   return node => {
     node.onkeydown = () => ele.textContent = ""
   }
@@ -23,6 +22,8 @@ function toggleTab(event) {
   btnDecrypt.classList.toggle(klass)
   tabEncrypt.classList.toggle(klass)
   tabDecrypt.classList.toggle(klass)
+  tabEncrypt.querySelector("[name=hash]").textContent = 
+  tabDecrypt.querySelector("[name=secret]").textContent =  ""
 }
 
 async function createHash(event) {

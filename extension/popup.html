@@ -14,7 +14,7 @@
 			<textarea placeholder="Your Secrets!" autocomplete="off" required name="secret" maxlength="2056" minlength="1" ></textarea>
 			<input placeholder="password (min 4)" autocomplete="off" required name="password" type="text" maxlength="256"  minlength="4"/>
 			<input type="submit" value="create"/>
-			<textarea disabled placeholder="hash" autocomplete="off" name="hash" maxlength="2056" minlength="1" ></textarea>
+			<span name="hash"></span>
 		</form>
 		<form name="decrypt">
 			<input required  placeholder="hash to decrypt" autocomplete="off" name="hash" type="text" minlength="1" size="16" />

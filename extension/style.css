@@ -21,12 +21,15 @@ input[type=password]{
 	width:100%;
 	margin-bottom:15px
 }
-textarea[name=hash]{
+span[name=hash]{
 	display:block;
 	margin:10px 0;
 	word-wrap:anywhere;
 	padding:10px;
 	color:darkblue;
+	min-height:1em;
+	max-height:200px;
+	overflow:auto;
 	background:beige;
 }
 pre[name=secret] {
@@ -36,6 +39,7 @@ pre[name=secret] {
 	min-height:1em;
 	overflow:auto;
 	color:darkblue;
+	max-height:200px;
 	padding:5px;
 }
 nav a {
