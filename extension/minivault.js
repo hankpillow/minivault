@@ -29,7 +29,7 @@ async function genEncryptionKey (password, mode, length) {
 }
 
 // Encrypt function
-async function encrypt (text, password, mode, length, ivLength) {
+async function encrypt (text, password) {
   var algo = {
     name: mode,
     length: length,
@@ -43,7 +43,7 @@ async function encrypt (text, password, mode, length, ivLength) {
     iv: algo.iv
   };
 }
-async function decrypt (encrypted, password, mode, length) {
+async function decrypt (encrypted, password) {
   var algo = {
     name: mode,
     length: length,

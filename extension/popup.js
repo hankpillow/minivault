@@ -22,7 +22,7 @@ function toggleTab(event) {
   btnDecrypt.classList.toggle(klass)
   tabEncrypt.classList.toggle(klass)
   tabDecrypt.classList.toggle(klass)
-  tabEncrypt.querySelector("[name=hash]").textContent = 
+  tabEncrypt.querySelector("[name=hash]").textContent =
   tabDecrypt.querySelector("[name=secret]").textContent =  ""
 }
 
@@ -31,7 +31,7 @@ async function createHash(event) {
   const form = event.target
   const secret = form.querySelector("[name=secret]").value.trim()
   const password = form.querySelector("[name=password]").value.trim()
-  const encripted = await encrypt(secret, password, mode, length, ivLength)
+  const encripted = await encrypt(secret, password)
   const hash = fromUint8ArrayToHexa(encripted.iv) + ";;" +  fromArrayBufferToHexa(encripted.cipherText)
   form.reset()
   const result = form.querySelector("[name=hash]")
@@ -50,7 +50,7 @@ async function decodeHash(event) {
       iv: fromHexaToUint8Array(parts[0]),
       cipherText: fromHexaToUint8Array(parts[1]),
     }
-    const decrypted = await decrypt(encripted, password, mode, length);
+    const decrypted = await decrypt(encripted, password);
     form.querySelector("[name=secret]").textContent = decrypted
   } catch (e) {
     form.querySelector("[name=secret]").textContent = ""
