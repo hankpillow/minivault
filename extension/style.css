@@ -1,5 +1,5 @@
 * {
-	font-size:1em;
+	font-size:1.05em;
 	vertical-align:top;
 	font-family:Mono;
 }
@@ -19,7 +19,8 @@ input[type=password]{
 	border:0;
 	display:block;
 	width:100%;
-	margin-bottom:15px
+	margin-bottom:15px;
+	padding:5px;
 }
 span[name=hash]{
 	display:block;
