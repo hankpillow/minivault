@@ -23,5 +23,12 @@ jobs:
         aws-region: us-east-2
 
     - name: Copy files to S3 with the AWS CLI
-      run: |      
+      run: |
         aws s3 cp --recursive extension/ s3://mrboots.me/minivault/
+
+    - run: ./pack-extension.sh
+
+    - uses: actions/upload-artifact@v1
+      with:
+        name: minivault.zip
+        path: minivault.zip
