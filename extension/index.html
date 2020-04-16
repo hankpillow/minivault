@@ -1,37 +1,40 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Minivault</title>
 		<style>
-			body {
-				max-width:400px;
-				font-size:1.02em;
-				font-family:Mono;
-				padding:20px;
-				margin:0;
-			}
-			footer{
-				border-top:1px dashed black;
-				padding:10px;
-			}
-			nav{ padding:10px}
-			nav span{
-				display:block;
-				margin-bottom:10px;
-			}
-			svg{ display:inline-block }
-			blockquote {
-				text-align:center;
-				background-color: beige;
-				padding: 10px;
-				margin-bottom:10px;
-				margin-left:0;
-				color: darkred;
-				border: 4px solid;
-			}
+		body {
+			background-color:white;
+			font-size:100%;
+			font-family:Mono;
+			margin:0;
+			max-width:400px
+		}
+		footer{
+			border-top:1px dashed black;
+			padding:10px;
+		}
+		nav{ padding:10px}
+		nav span{
+			display:block;
+			margin-bottom:10px;
+		}
+		svg{ display:inline-block }
+		blockquote {
+			text-align:center;
+			background-color: beige;
+			padding: 10px;
+			margin-bottom:10px;
+			margin-left:0;
+			color: darkred;
+			border: 4px solid;
+		}
+		main { padding:10px}
 		</style>
 	</head>
 	<body>
+		<main>
 		<h1>🔒 Minivault</h1>
 		<p>Encrypt secrets with password and share with those who know it.</p>
 		<p>This extension is designed to encrypt short secrets (max 2056 chars) with a password to create a unique hash that only with the same password you can decrypt.  </p>
@@ -39,12 +42,13 @@
 			No data is kept or sent!
 		</blockquote>
 		<nav>
-				<span>👉 <a href="popup.html">Try here</a> </span>
-				<span>🌐 <a href="https://chrome.google.com/webstore/detail/minivault/ecnpflgglffkleflcmefcmfpenlagjpk" target="_blank">Chrome Extension</a></span>
-				<span>🦊 <a href="https://addons.mozilla.org/en-US/firefox/addon/minivault/?src=search" target="_blank">Firefox Add-Ons</a></span>
+			<span>👉 <a href="popup.html">Try here</a> </span>
+			<span>🌐 <a href="https://chrome.google.com/webstore/detail/minivault/ecnpflgglffkleflcmefcmfpenlagjpk" target="_blank">Chrome Extension</a></span>
+			<span>🦊 <a href="https://addons.mozilla.org/en-US/firefox/addon/minivault/?src=search" target="_blank">Firefox Add-Ons</a></span>
 		</nav>
 		<footer>
 			Both extension and web are running this <a href="https://github.com/hankpillow/minivault" target="_blank">code</a>
 		</footer>
+		<main>
 	</body>
 </html>
