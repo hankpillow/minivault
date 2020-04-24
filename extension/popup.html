@@ -9,6 +9,7 @@
 			vertical-align:top;
 			font-family: monospace;
 		}
+		body { font-size:100% }
 		form {
 			display:none;
 			background-color:lightgray;
@@ -16,9 +17,7 @@
 			margin:0;
 			padding:10px;
 		}
-		h1{
-			font-size:1.1em 
-		}
+		h1 { font-size:1.1em }
 		textarea,
 		input[type=text],
 		input[type=password]{
@@ -58,6 +57,9 @@
 		}
 		.-off { display:none }
 		a.-on{ background-color:lightgray; }
+		a.-clipboard {
+			float:right;
+	 	}
 		form.-on{
 			background-color:lightgray;
 			display:block
@@ -74,6 +76,7 @@
 			<textarea placeholder="Your Secrets!" autocomplete="off" required name="secret" maxlength="2056" minlength="1" ></textarea>
 			<input placeholder="password (min 4)" autocomplete="off" required name="password" type="text" maxlength="256"  minlength="4"/>
 			<input type="submit" value="create"/>
+			<a name="copy" class="-clipboard" href="#copy"></a>
 			<span name="hash"></span>
 		</form>
 		<form name="decrypt">
