@@ -25,7 +25,7 @@ jobs:
     - name: Copy files to S3 with the AWS CLI
       run: |
         aws s3 cp --recursive extension/ s3://mrboots.me/minivault/ --cache-control max-age=2628000000,public
-        aws cloudfront create-invalidation --distribution-id=${{ secrets.AWS_Distribution_ID }}
+        aws cloudfront create-invalidation --distribution-id=${{ secrets.AWS_Distribution_ID }} --paths="/*"
 
     - uses: actions/upload-artifact@v1
       with:
