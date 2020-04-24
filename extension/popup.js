@@ -29,16 +29,16 @@ function toggleTab(event) {
 }
 
 function copyToClipboard(hash) {
-    if (!navigator.clipboard 
+    if (!navigator.clipboard
       && typeof navigator.clipboard.writeText !== "function") {
       return
-    } 
+    }
     hash = hash || ""
     btnCopy.textContent = "copy"
     btnCopy.onclick = event => {
       event.preventDefault()
       navigator.clipboard.writeText(hash)
-        .then(_ => { 
+        .then(_ => {
           btnCopy.textContent = "copied"
         }, err =>{
           btnCopy.textContent = "failed"
@@ -62,7 +62,7 @@ async function createHash(event) {
   form.reset()
   btnCopy.textContent = ""
   result.textContent = hash
-  copyToClipboard(hash)
+  if (window === window.top) copyToClipboard(hash)
   result.focus()
 }
 
