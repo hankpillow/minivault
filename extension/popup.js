@@ -18,8 +18,10 @@ function toggleTab(event) {
     const targetTab = a.getAttribute("href")
     const qs = targetTab === "encrypt" ? "[name=hash]" : "[name=secret]"
     const form = doc.querySelector(`form[name=${targetTab}]`)
+    const copy = form.querySelector("[name=copy]")
     form.classList.toggle(klass)
     form.reset()
+    copy.textContent = ""
     form.querySelector(qs).textContent = ""
   })
 }
