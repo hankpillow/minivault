@@ -6,11 +6,12 @@ This extension is designed to encrypt short secrets (max 2056 chars) with a pass
 
 > No data is kept or sent to nowhere! 
 
+* [Web version](https://minivault.netlify.app/)
+
 * [Google Chrome Extension](https://chrome.google.com/webstore/detail/minivault/ecnpflgglffkleflcmefcmfpenlagjpk)
 
 * [Firefox Add-Ons](https://addons.mozilla.org/en-US/firefox/addon/minivault/?src=search)
 
-* [Web version](https://www.mrboots.me/minivault/index.html)
-
 ----
-![last deploy](https://github.com/hankpillow/minivault/workflows/Deploy%20to%20s3/badge.svg)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/bd352089-df55-449c-933e-c546276550b0/deploy-status)](https://app.netlify.com/sites/minivault/deploys)
+
