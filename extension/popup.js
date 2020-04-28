@@ -1,51 +1,44 @@
-const btnEncrypt = this.document.querySelector("a[href=encrypt]")
-const btnCopy = this.document.querySelector("[name=copy]")
-const btnDecrypt = this.document.querySelector("a[href=decrypt]")
-const tabEncrypt = this.document.querySelector("form[name=encrypt]")
-const tabDecrypt = this.document.querySelector("form[name=decrypt]")
+const doc = this.document
 
-function bindFields(form, fields, result) {
-  Array
-    .from(form.querySelectorAll(fields))
-    .map(bindReset(form.querySelector(result)))
-}
+Array
+  .from(doc.querySelectorAll("nav a"))
+  .forEach(a => a.onclick = toggleTab)
 
-function bindReset(ele){
-  return node => {
-    node.onkeydown = () => ele.textContent = ""
-  }
-}
+Array
+  .from(doc.querySelectorAll("form"))
+  .forEach(form => form.onsubmit = form.name === "encrypt" ? createHash : decodeHash)
 
 function toggleTab(event) {
-  const klass = "-on"
   event.preventDefault()
-  btnEncrypt.classList.toggle(klass)
-  btnDecrypt.classList.toggle(klass)
-  tabEncrypt.classList.toggle(klass)
-  tabDecrypt.classList.toggle(klass)
-  tabEncrypt.querySelector("[name=hash]").textContent = ""
-  tabDecrypt.querySelector("[name=secret]").textContent =  ""
-  btnCopy.textContent = ""
+  const klass = "-on"
+  Array.from(
+    event.target.parentNode.querySelectorAll("a")
+  ).forEach(a => {
+    const targetTab = a.getAttribute("href")
+    doc.querySelector(`form[name=${targetTab}]`).classList.toggle(klass)
+    a.classList.toggle(klass)
+  })
 }
 
-function copyToClipboard(hash) {
-    if (!navigator.clipboard
-      && typeof navigator.clipboard.writeText !== "function") {
-      return
-    }
+function copyToClipboard(hash, btn) {
+    if (!btn || (!navigator.clipboard
+      && typeof navigator.clipboard.writeText !== "function")){ return }
+
     hash = hash || ""
-    btnCopy.textContent = "copy"
-    btnCopy.onclick = event => {
+    if (!hash.length) return
+
+    btn.textContent = "copy"
+    btn.onclick = event => {
       event.preventDefault()
       navigator.clipboard.writeText(hash)
         .then(_ => {
-          btnCopy.textContent = "copied"
+          btn.textContent = "copied"
         }, err =>{
-          btnCopy.textContent = "failed"
+          btn.textContent = "couldnt copy!"
           console.error(err)
         })
         .catch(err => {
-          btnCopy.textContent = "failed"
+          btn.textContent = "couldnt copy!"
           console.error(err)
         })
     }
@@ -56,13 +49,15 @@ async function createHash(event) {
   const form = event.target
   const secret = form.querySelector("[name=secret]").value.trim()
   const password = form.querySelector("[name=password]").value.trim()
+  const copy = form.querySelector("[name=copy]")
   const encripted = await encrypt(secret, password)
   const hash = (fromUint8ArrayToHexa(encripted.iv) + ";;" +  fromArrayBufferToHexa(encripted.cipherText)).trim()
   const result = form.querySelector("[name=hash]")
   form.reset()
-  btnCopy.textContent = ""
   result.textContent = hash
-  if (window === window.top) copyToClipboard(hash)
+  if (window === window.top) {
+    copyToClipboard(hash, copy)
+  }
   result.focus()
 }
 
@@ -72,13 +67,18 @@ async function decodeHash(event) {
   const hash = form.querySelector("[name=hash]").value.trim();
   const parts = hash.split(";;")
   const password = form.querySelector("[name=password]").value.trim()
+  const copy = form.querySelector("[name=copy]")
+  let secret
   try{
     const encripted = {
       iv: fromHexaToUint8Array(parts[0]),
       cipherText: fromHexaToUint8Array(parts[1]),
     }
-    const decrypted = await decrypt(encripted, password);
-    form.querySelector("[name=secret]").textContent = decrypted
+    secret = await decrypt(encripted, password);
+    form.querySelector("[name=secret]").textContent = secret
+    if (window === window.top) {
+      copyToClipboard(secret, copy)
+    }
   } catch (e) {
     form.querySelector("[name=secret]").textContent = ""
     alert("invalid password")
@@ -86,14 +86,3 @@ async function decodeHash(event) {
   }
   form.reset()
 }
-
-
-// ----
-tabEncrypt.addEventListener("submit", createHash)
-tabDecrypt.addEventListener("submit", decodeHash)
-
-bindFields(tabEncrypt, "[name=secret],[name=password]", "[name=hash]")
-bindFields(tabDecrypt, "[name=hash],[name=password]", "[name=secret]")
-
-btnEncrypt.addEventListener("click", toggleTab)
-btnDecrypt.addEventListener("click", toggleTab)
