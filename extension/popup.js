@@ -14,9 +14,13 @@ function toggleTab(event) {
   Array.from(
     event.target.parentNode.querySelectorAll("a")
   ).forEach(a => {
-    const targetTab = a.getAttribute("href")
-    doc.querySelector(`form[name=${targetTab}]`).classList.toggle(klass)
     a.classList.toggle(klass)
+    const targetTab = a.getAttribute("href")
+    const qs = targetTab === "encrypt" ? "[name=hash]" : "[name=secret]"
+    const form = doc.querySelector(`form[name=${targetTab}]`)
+    form.classList.toggle(klass)
+    form.reset()
+    form.querySelector(qs).textContent = ""
   })
 }
 

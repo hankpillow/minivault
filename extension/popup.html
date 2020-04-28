@@ -46,17 +46,25 @@
 			min-height:1em;
 			max-height:200px;
 			overflow:auto;
-			background:beige;
+			background:lightgreen;
 		}
 		pre[name=secret] {
 			margin:10px 0;
 			display:block;
-			background:beige;
-			min-height:1em;
+			background:lightgreen;
 			overflow:auto;
 			max-height:200px;
 			padding:5px;
 		}
+
+		pre[name=secret]:empty,
+		span[name=hash]:empty {
+			display:block;
+			margin:0;
+			padding:0;
+			background:none;
+		}
+
 		nav a {
 			padding:0.55em;
 			color:black;
