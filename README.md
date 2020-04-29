@@ -41,7 +41,7 @@ end
 
 ~/.bashrc
 ```sh
-alias encrypt='docker run --rm minivault/decrypt:1.5.0'
+alias encrypt='docker run --rm minivault/encrypt:1.5.0'
 alias decrypt='docker run --rm minivault/decrypt:1.5.0'
 ```
 
@@ -52,7 +52,7 @@ nodejs
 npm ci
 npm test
 node bin/encrypt.js "mysecret" "mypassword"
-node bin/encrypt.js "cf2c1c92ad24ef5645a7d92c;;8104276cb1a47b0bc69ba2a19115878ff10ee3b4fd6dc28e" "mypassword"
+node bin/decrypt.js "cf2c1c92ad24ef5645a7d92c;;8104276cb1a47b0bc69ba2a19115878ff10ee3b4fd6dc28e" "mypassword"
 ```
 
 docker-compose 
