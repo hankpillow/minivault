@@ -2,9 +2,10 @@ const puppeteer = require('puppeteer');
 const assert = require("assert");
 const path = require("path");
 const secrets = require("./secrets");
+const browserConf = require("./browserConf");
 
 (async () => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch(browserConf);
     const page = await browser.newPage();
     const conf = { waitUntil: "load" }
     let url = path.resolve(`${__dirname}/minivault.html`)

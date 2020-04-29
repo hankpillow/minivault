@@ -8,7 +8,7 @@ on:
     branches: [ "*" ]
 
 jobs:
-  deploy:
+  testcode:
     runs-on: ubuntu-latest
     strategy:
       matrix:

@@ -3,6 +3,7 @@ const assert = require("assert");
 const path = require("path");
 const secret = process.argv[2] || ""
 const password = process.argv[3] || ""
+const browserConf = require("../test/browserConf");
 
 try {
   assert(!!secret.length, "missing secret. encrypt.js secret password")
@@ -12,7 +13,7 @@ try {
 }
 
 (async () => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch(browserConf);
   const page = await browser.newPage();
   const conf = { waitUntil: "load" }
   let url = path.resolve(`${__dirname}/../test/minivault.html`)
