@@ -35,15 +35,21 @@ async function encrypt (text, password) {
     length: length,
     iv: crypto.getRandomValues(new Uint8Array(ivLength))
   };
-  var key = await genEncryptionKey(password, mode, length);
-  var encoded = new TextEncoder().encode(text);
-
-  return {
+  const key = await genEncryptionKey(password, mode, length);
+  const encoded = new TextEncoder().encode(text);
+  const encripted = {
     cipherText: await crypto.subtle.encrypt(algo, key, encoded),
     iv: algo.iv
-  };
+  }
+  return (fromUint8ArrayToHexa(encripted.iv) + ";;" +  fromArrayBufferToHexa(encripted.cipherText)).trim();
 }
-async function decrypt (encrypted, password) {
+
+async function decrypt (hash, password) {
+  const parts = hash.split(";;")
+  const encrypted = {
+    iv: fromHexaToUint8Array(parts[0]),
+    cipherText: fromHexaToUint8Array(parts[1]),
+  }
   var algo = {
     name: mode,
     length: length,

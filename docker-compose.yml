@@ -1,0 +1,27 @@
+version: '3'
+services:
+
+  test:
+    image: minivault/minivault:1.5.0
+    command: "npm test"
+    volumes:
+      - ./bin/:/minivault/bin
+      - ./test/:/minivault/test
+      - ./extension/:/minivault/extension
+
+  encrypt:
+    image: minivault/minivault:1.5.0
+    entrypoint: "node bin/encrypt.js"
+    volumes:
+      - ./bin/:/minivault/bin
+      - ./test/:/minivault/test
+      - ./extension/:/minivault/extension
+
+  decrypt:
+    image: minivault/minivault:1.5.0
+    entrypoint: "node bin/decrypt.js"
+    volumes:
+      - ./bin/:/minivault/bin
+      - ./test/:/minivault/test
+      - ./extension/:/minivault/extension
+

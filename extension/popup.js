@@ -56,14 +56,11 @@ async function createHash(event) {
   const secret = form.querySelector("[name=secret]").value.trim()
   const password = form.querySelector("[name=password]").value.trim()
   const copy = form.querySelector("[name=copy]")
-  const encripted = await encrypt(secret, password)
-  const hash = (fromUint8ArrayToHexa(encripted.iv) + ";;" +  fromArrayBufferToHexa(encripted.cipherText)).trim()
+  const hash = await encrypt(secret, password)
   const result = form.querySelector("[name=hash]")
   form.reset()
   result.textContent = hash
-  if (window === window.top) {
-    copyToClipboard(hash, copy)
-  }
+  if (window === window.top) { copyToClipboard(hash, copy) }
   result.focus()
 }
 
@@ -71,16 +68,11 @@ async function decodeHash(event) {
   event.preventDefault()
   const form = event.target
   const hash = form.querySelector("[name=hash]").value.trim();
-  const parts = hash.split(";;")
   const password = form.querySelector("[name=password]").value.trim()
   const copy = form.querySelector("[name=copy]")
   let secret
   try{
-    const encripted = {
-      iv: fromHexaToUint8Array(parts[0]),
-      cipherText: fromHexaToUint8Array(parts[1]),
-    }
-    secret = await decrypt(encripted, password);
+    secret = await decrypt(hash, password);
     form.querySelector("[name=secret]").textContent = secret
     if (window === window.top) {
       copyToClipboard(secret, copy)

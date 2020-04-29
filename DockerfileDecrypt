@@ -1,0 +1,2 @@
+FROM minivault/minivault:1.5.0
+ENTRYPOINT [ "node", "bin/decrypt.js"]
