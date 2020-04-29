@@ -1,16 +1,23 @@
 const puppeteer = require('puppeteer');
 const assert = require("assert");
+const path = require("path");
+const secrets = require("./secrets");
 
 (async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    const url = `file://${__dirname}/extension/popup.html`
     const conf = { waitUntil: "load" }
-    await page.goto(url, conf);
+    let url = path.resolve(`${__dirname}/../extension/popup.html`)
+    url = `file://${url}`
 
-    const password = "pass"
-    const secret = "minivault"
-    const oldHash = "5d6ec5464cb2b1e9af74392a;;97f4d86c0f4d1a61805e312c5984b824e9f6fb69a186875583"
+    try{
+      await page.goto(url, conf);
+    } catch (err){
+      console.log("Error loading page:", url)
+      console.error(err)
+      process.exit()
+    }
+
     try {
       // test if function is there
       let tEncrypt = await page.evaluate(() => typeof window.encrypt)
@@ -21,11 +28,6 @@ const assert = require("assert");
       assert(tDecrypt === "function", "unexpected format to encrypt fn")
       console.log("+ decrypt function exists")
 
-      page.on('console', msg => {
-          for (let i = 0; i < msg.args().length; ++i)
-              console.log(`${msg.args()[i]}`);
-      });
-
       console.log("+ creating new hash...")
       await page.evaluate((secret, password) => {
         const form = document.documentElement.querySelector("form[name=encrypt]")
@@ -35,7 +37,7 @@ const assert = require("assert");
         textarea.value = secret
         pass.value = password
         btn.click()
-      },secret, password)
+      },secrets.secret, secrets.password)
 
       await page.waitFor(() => {
         const hash =  document.querySelector("form[name=encrypt] [name=hash]")
@@ -45,7 +47,7 @@ const assert = require("assert");
       const newHash = await page.evaluate(() => document
           .querySelector("form[name=encrypt] [name=hash]").textContent);
 
-      assert(!!newHash.match(/^\w+;;\w+$/gi), `unexpected hash pattern: ${tEncrypt}`)
+      assert(!!newHash.match(/^\w+;;\w+$/gi), `unexpected hash pattern: ${newHash}`)
       console.log(`+ hash pattern match: ${newHash}`)
 
       console.log("+ decoding new hash: " + newHash)
@@ -57,7 +59,7 @@ const assert = require("assert");
         hash.value = newHash
         pass.value = password
         btn.click()
-      },newHash, password)
+      },newHash, secrets.password)
 
       await page.waitFor(() => {
         const hash =  document.querySelector("form[name=decrypt] [name=secret]")
@@ -66,10 +68,10 @@ const assert = require("assert");
 
       let decodedHash = await page.evaluate(() => document
           .querySelector("form[name=decrypt] [name=secret]").textContent);
-      assert(decodedHash === secret, `wrong secret: ${tEncrypt}`)
+      assert(decodedHash === secrets.secret, `wrong secret: ${decodedHash}`)
       console.log("+ decoded: "+ decodedHash)
 
-      console.log("+ decoding old hash: " + oldHash)
+      console.log("+ decoding old hash: " + secrets.hash)
       await page.evaluate((oldHash, password) => {
         const form = document.documentElement.querySelector("form[name=decrypt]")
         const hash = form.querySelector("[name=hash]")
@@ -78,15 +80,17 @@ const assert = require("assert");
         hash.value = oldHash
         pass.value = password
         btn.click()
-      },oldHash, password)
+      },secrets.hash, secrets.password)
 
       await page.waitFor(() => {
         const hash =  document.querySelector("form[name=decrypt] [name=secret]")
         return hash.textContent.length
       },{timeout:1000});
 
-      decodedHash = await page.evaluate(() => document.querySelector("form[name=decrypt] [name=secret]").textContent);
-      assert(decodedHash === secret, `wrong secret: ${tEncrypt}`)
+      decodedHash = await page.evaluate(() => document
+        .querySelector("form[name=decrypt] [name=secret]").textContent);
+      assert(decodedHash === secrets.secret, `wrong secret: ${decodedHash}`)
+
       console.log("+ decoded: "+ decodedHash)
       console.log("done")
     } catch (err) {

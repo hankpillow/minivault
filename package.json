@@ -1,0 +1,30 @@
+{
+  "name": "minivault",
+  "version": "1.0.0",
+  "description": "Encrypt secrets with password and share with those who know it.",
+  "main": "index.js",
+  "bin": {
+    "minivault": "encrypt.js"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "puppeteer": "3.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "pretest": "node test/test.extension.js",
+    "test": "node test/test.minivault.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hankpillow/minivault.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hankpillow/minivault/issues"
+  },
+  "homepage": "https://github.com/hankpillow/minivault#readme"
+}
