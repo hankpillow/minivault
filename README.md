@@ -48,7 +48,6 @@ alias decrypt='docker run --rm minivault/decrypt:1.5.0'
 ## for dev
 
 nodejs
-
 ```sh
 npm ci
 npm test
@@ -56,8 +55,7 @@ node bin/encrypt.js "mysecret" "mypassword"
 node bin/encrypt.js "cf2c1c92ad24ef5645a7d92c;;8104276cb1a47b0bc69ba2a19115878ff10ee3b4fd6dc28e" "mypassword"
 ```
 
-docker-compose (before creating new image)
-* Encrypt
+docker-compose 
  ```sh
 docker-compose run --rm test
 docker-compose run --rm encrypt "mysecret" "mypassword"
