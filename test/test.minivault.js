@@ -56,6 +56,7 @@ let browser, page
       tDecrypt = await page.evaluate((tEncrypt) => window.decrypt(tEncrypt, "pass"), secrets.hash)
       assert(tDecrypt === secrets.secret, `failed do decrypt old hash:${tDecrypt}`)
       console.log(`+ old hash: ${secrets.hash} decrypted: ${tDecrypt}`)
+
       console.log("done")
       await browser.close();
 
