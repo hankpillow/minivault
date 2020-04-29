@@ -3,11 +3,25 @@ const assert = require("assert");
 const path = require("path");
 const secrets = require("./secrets");
 const browserConf = require("./browserConf");
+const conf = { waitUntil: "load" }
+
+let browser, page
 
 (async () => {
-    const browser = await puppeteer.launch(browserConf);
-    const page = await browser.newPage();
-    const conf = { waitUntil: "load" }
+    try { 
+      browser = await puppeteer.launch(browserConf);
+    } catch (err) { 
+      console.error(err);
+      process.exit(1)
+    }
+
+    try { 
+      page = await browser.newPage(); 
+    } catch (err) { 
+      console.error(err);
+      process.exit(1) 
+    }
+
     let url = path.resolve(`${__dirname}/../extension/popup.html`)
     url = `file://${url}`
 
@@ -91,12 +105,13 @@ const browserConf = require("./browserConf");
       decodedHash = await page.evaluate(() => document
         .querySelector("form[name=decrypt] [name=secret]").textContent);
       assert(decodedHash === secrets.secret, `wrong secret: ${decodedHash}`)
-
       console.log("+ decoded: "+ decodedHash)
+
       console.log("done")
+      await browser.close();
+
     } catch (err) {
-      console.log("error")
       console.error(err)
+      process.exit(1)
     }
-    await browser.close();
 })();
