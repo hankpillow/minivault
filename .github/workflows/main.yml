@@ -10,20 +10,13 @@ on:
 jobs:
   testcode:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
 
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
     - name: Testing version with node ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm test
+    - run: docker run --rm --cap-add=SYS_ADMIN -v "$PWD/test:/test" -v "$PWD/extension:/extension" --name minivault-puppeteer minivault/puppeteer:3.0.2 npm test
 
     - name: Pack extension
       uses: actions/upload-artifact@v1
