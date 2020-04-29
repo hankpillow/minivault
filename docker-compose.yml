@@ -1,0 +1,26 @@
+version: '3'
+services:
+
+  test:
+    image: minivault/puppeteer:3.0.2
+    command: "npm test"
+    volumes:
+      - ./test/:/test
+      - ./extension/:/extension
+
+  encrypt:
+    image: minivault/puppeteer:3.0.2
+    entrypoint: "node cli/encrypt.js"
+    volumes:
+      - ./bin/:/cli
+      - ./test/:/test
+      - ./extension/:/extension
+
+  decrypt:
+    image: minivault/puppeteer:3.0.2
+    entrypoint: "node cli/decrypt.js"
+    volumes:
+      - ./bin/:/cli
+      - ./test/:/test
+      - ./extension/:/extension
+

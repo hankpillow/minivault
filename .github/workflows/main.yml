@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run tests
-      run: docker run --rm --cap-add=SYS_ADMIN -v "$PWD/test:/test" -v "$PWD/extension:/extension" --name minivault-puppeteer minivault/puppeteer:3.0.2 npm test
+      run: docker-compose run --rm test
 
     - name: Pack extension
       uses: actions/upload-artifact@v1
