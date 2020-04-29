@@ -12,60 +12,56 @@ This extension is designed to encrypt short secrets (max 2056 chars) with a pass
 
 * [Firefox Add-Ons](https://addons.mozilla.org/en-US/firefox/addon/minivault/?src=search)
 
-* Command line version
+----
 
-## Via Docker
+Running minivault from command line
 
-* Encrypt
+### docker
+
  ```sh
-docker-compose run --rm encrypt "mysecret" "mypassword"
+docker run --rm minivault/encrypt:1.5.0 "mysecret" "mypassword"
+docker run --rm minivault/decrypt:1.5.0 "cf2c1c92ad24ef5645a7d92c;;8104276cb1a47b0bc69ba2a19115878ff10ee3b4fd6dc28e" "mypassword"
 ```
 
-* Decrypt
- ```sh
-docker-compose run --rm decrypt "myhash" "mypassword"
-```
-
-## Via Nodejs
-
-```sh
-npm ci
-```
-
-* Encrypt
- ```sh
-node bin/encrypt.js "mysecret" "mypassword"
-```
-
-* Decrypt
- ```sh
-node bin/encrypt.js "myhash" "mypassword"
-```
-
-### Cmd alias
-
-* Fish shell
+### terminal alias
 
 ~/.config/fish/functions/encrypt.fish
 ```sh
 function encrypt
-    command docker run --rm -v $HOME/workspace/minivault/test/:/test -v $HOME/workspace/minivault/bin/:/cli -v $HOME/workspace/minivault/extension/:/extension minivault/puppeteer:3.0.2 node cli/encrypt.js $argv
+    command docker run --rm minivault/encrypt:1.5.0 $argv
 end
 ```
 
 ~/.config/fish/functions/decrypt.fish
 ```sh
 function decrypt
-    command docker run --rm -v $HOME/workspace/minivault/test/:/test -v $HOME/workspace/minivault/bin/:/cli -v $HOME/workspace/minivault/extension/:/extension minivault/puppeteer:3.0.2 node cli/decrypt.js $argv
+    command docker run --rm minivault/decrypt:1.5.0 $argv
 end
 ```
 
-* Bash
-
 ~/.bashrc
 ```sh
-alias encrypt='docker run --rm -v $HOME/workspace/minivault/test/:/test -v $HOME/workspace/minivault/bin/:/cli -v $HOME/workspace/minivault/extension/:/extension minivault/puppeteer:3.0.2 node cli/encrypt.js'
-alias decrypt='docker run --rm -v $HOME/workspace/minivault/test/:/test -v $HOME/workspace/minivault/bin/:/cli -v $HOME/workspace/minivault/extension/:/extension minivault/puppeteer:3.0.2 node cli/decrypt.js'
+alias encrypt='docker run --rm minivault/decrypt:1.5.0'
+alias decrypt='docker run --rm minivault/decrypt:1.5.0'
+```
+
+
+## for dev
+
+nodejs
+
+```sh
+npm ci
+node bin/encrypt.js "mysecret" "mypassword"
+node bin/encrypt.js "cf2c1c92ad24ef5645a7d92c;;8104276cb1a47b0bc69ba2a19115878ff10ee3b4fd6dc28e" "mypassword"
+```
+
+docker-compose (before creating new image)
+* Encrypt
+ ```sh
+docker-compose run --rm test
+docker-compose run --rm encrypt "mysecret" "mypassword"
+docker-compose run --rm decrypt "cf2c1c92ad24ef5645a7d92c;;8104276cb1a47b0bc69ba2a19115878ff10ee3b4fd6dc28e" "mypassword"
 ```
 
 ----
