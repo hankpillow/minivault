@@ -16,7 +16,7 @@ try {
   const browser = await puppeteer.launch(browserConf);
   const page = await browser.newPage();
   const conf = { waitUntil: "load" }
-  let url = path.resolve(`${__dirname}/../test/minivault.html`)
+  let url = path.resolve(`${__dirname}/../minivault.html`)
   url = `file://${url}`
 
   try {

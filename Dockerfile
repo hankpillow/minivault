@@ -24,14 +24,23 @@ RUN apt-get update \
 # ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
 # Install puppeteer so it's available in the container.
+RUN mkdir /minivault
+WORKDIR /minivault
+
+COPY extension/ extension
+COPY bin/ bin
+COPY test/ test
 COPY package.json package.json
-RUN npm i \ 
+COPY minivault.html minivault.html
+COPY package-lock.json package-lock.json
+
+RUN npm ci \ 
     # Add user so we don't need --no-sandbox.
     # same layer as npm install to keep re-chowned files from using up several hundred MBs more space
     && groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && mkdir -p /home/pptruser/Downloads \
     && chown -R pptruser:pptruser /home/pptruser \
-    && chown -R pptruser:pptruser /node_modules
+    && chown -R pptruser:pptruser /minivault/node_modules
 
 # Run everything after as non-privileged user.
 USER pptruser
