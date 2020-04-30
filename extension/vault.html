@@ -91,21 +91,21 @@
 			<a href="decrypt">🔓 Decrypt</a>
 		</nav>
 		<form name="encrypt" class="-on">
-			<textarea placeholder="Your Secrets" autocomplete="off" required name="secret" maxlength="2056" minlength="1" ></textarea>
-			<input placeholder="password (min 4)" autocomplete="off" required name="password" type="text" maxlength="256"  minlength="4"/>
+			<textarea placeholder="Your Secrets (max 2056)" autocomplete="off" required name="secret" maxlength="2056" minlength="1" ></textarea>
+			<input placeholder="password (min 1 max 256)" autocomplete="off" required name="password" type="text" maxlength="256"  minlength="1"/>
 			<input type="submit" value="create"/>
 			<a name="copy" class="-clipboard" href="#copy-hash"></a>
 			<span name="hash"></span>
 		</form>
 		<form name="decrypt">
 			<input required  placeholder="hash to decrypt" autocomplete="off" name="hash" type="text" minlength="1" size="16" />
-			<input required  placeholder="password (min 4)" autocomplete="off" name="password" type="password" minlength="4"/>
+			<input required  placeholder="password" autocomplete="off" name="password" type="password" minlength="4"/>
 			<input type="submit" value="view"/>
 			<a name="copy" class="-clipboard" href="#copy-secret"></a>
 			<pre name="secret"></pre>
 		</form>
-		<footer>powered by <a target="_blank" href="https://github.com/hankpillow/minivault">Minivault</a></footer>
+		<footer>powered by <a target="_blank" href="https://github.com/hankpillow/minivault">Minivault (v1.6.0)</a></footer>
 		<script src="minivault.js"></script>
-		<script src="popup.js" defer></script>
+		<script src="vault.js" defer></script>
 	</body>
 </html>

@@ -8,21 +8,21 @@ const conf = { waitUntil: "load" }
 let browser, page
 
 (async () => {
-    try { 
+    try {
       browser = await puppeteer.launch(browserConf);
-    } catch (err) { 
+    } catch (err) {
       console.error(err);
       process.exit(1)
     }
 
-    try { 
-      page = await browser.newPage(); 
-    } catch (err) { 
+    try {
+      page = await browser.newPage();
+    } catch (err) {
       console.error(err);
-      process.exit(1) 
+      process.exit(1)
     }
 
-    let url = path.resolve(`${__dirname}/../extension/popup.html`)
+    let url = path.resolve(`${__dirname}/../extension/vault.html`)
     url = `file://${url}`
 
     try{

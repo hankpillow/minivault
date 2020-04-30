@@ -10,12 +10,16 @@
     "test": "test"
   },
   "dependencies": {
+    "node-webcrypto-ossl": "^2.0.7",
     "puppeteer": "3.0.2"
   },
   "devDependencies": {},
   "scripts": {
     "pretest": "node test/test.extension.js",
-    "test": "node test/test.minivault.js"
+    "test": "node test/test.minivault.js",
+    "posttest": "npm run testencrypt && npm run testdecrypt",
+    "testencrypt": "node bin/encrypt minivault pass",
+    "testdecrypt": "node bin/decrypt \"5d6ec5464cb2b1e9af74392a;;97f4d86c0f4d1a61805e312c5984b824e9f6fb69a186875583\" pass"
   },
   "repository": {
     "type": "git",

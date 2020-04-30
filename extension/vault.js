@@ -52,11 +52,12 @@ function copyToClipboard(hash, btn) {
 
 async function createHash(event) {
   event.preventDefault()
+  if (!crypto) return
   const form = event.target
   const secret = form.querySelector("[name=secret]").value.trim()
   const password = form.querySelector("[name=password]").value.trim()
   const copy = form.querySelector("[name=copy]")
-  const hash = await encrypt(secret, password)
+  const hash = await encrypt(secret, password, crypto)
   const result = form.querySelector("[name=hash]")
   form.reset()
   result.textContent = hash
@@ -66,13 +67,14 @@ async function createHash(event) {
 
 async function decodeHash(event) {
   event.preventDefault()
+  if (!crypto) return
   const form = event.target
   const hash = form.querySelector("[name=hash]").value.trim();
   const password = form.querySelector("[name=password]").value.trim()
   const copy = form.querySelector("[name=copy]")
   let secret
   try{
-    secret = await decrypt(hash, password);
+    secret = await decrypt(hash, password, crypto);
     form.querySelector("[name=secret]").textContent = secret
     if (window === window.top) {
       copyToClipboard(secret, copy)
