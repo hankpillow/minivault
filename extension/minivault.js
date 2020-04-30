@@ -14,7 +14,7 @@ function fromArrayBufferToHexa (buff) {
   return [].map.call(new Uint8Array(buff), b => ('00' + b.toString(16)).slice(-2)).join('');
 }
 
-async function genEncryptionKey (password, mode, length) {
+async function genEncryptionKey (password, mode, length, crypto) {
   var algo = {
     name: 'PBKDF2',
     hash: 'SHA-256',
@@ -29,13 +29,13 @@ async function genEncryptionKey (password, mode, length) {
 }
 
 // Encrypt function
-async function encrypt (text, password) {
+async function encrypt (text, password, crypto) {
   var algo = {
     name: mode,
     length: length,
     iv: crypto.getRandomValues(new Uint8Array(ivLength))
   };
-  const key = await genEncryptionKey(password, mode, length);
+  const key = await genEncryptionKey(password, mode, length, crypto);
   const encoded = new TextEncoder().encode(text);
   const encripted = {
     cipherText: await crypto.subtle.encrypt(algo, key, encoded),
@@ -44,7 +44,7 @@ async function encrypt (text, password) {
   return (fromUint8ArrayToHexa(encripted.iv) + ";;" +  fromArrayBufferToHexa(encripted.cipherText)).trim();
 }
 
-async function decrypt (hash, password) {
+async function decrypt (hash, password, crypto) {
   const parts = hash.split(";;")
   const encrypted = {
     iv: fromHexaToUint8Array(parts[0]),
@@ -55,7 +55,16 @@ async function decrypt (hash, password) {
     length: length,
     iv: encrypted.iv
   };
-  var key = await genEncryptionKey(password, mode, length);
+  var key = await genEncryptionKey(password, mode, length, crypto);
   var decrypted = await crypto.subtle.decrypt(algo, key, encrypted.cipherText);
   return new TextDecoder().decode(decrypted);
 }
+
+if (typeof module !== "undefined"){
+  module.exports = {
+    encrypt: encrypt,
+    decrypt: decrypt
+  }
+}
+
+
