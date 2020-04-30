@@ -19,8 +19,8 @@ Running minivault from command line
 ### docker
 
  ```sh
-docker run --rm minivault/encrypt:1.5.0 "mysecret" "mypassword"
-docker run --rm minivault/decrypt:1.5.0 "cf2c1c92ad24ef5645a7d92c;;8104276cb1a47b0bc69ba2a19115878ff10ee3b4fd6dc28e" "mypassword"
+docker run --rm minivault/vault:1.6.0 encrypt secret password
+docker run --rm minivault/vault:1.6.0 decrypt hash password
 ```
 
 ### terminal alias
@@ -28,21 +28,21 @@ docker run --rm minivault/decrypt:1.5.0 "cf2c1c92ad24ef5645a7d92c;;8104276cb1a47
 ~/.config/fish/functions/encrypt.fish
 ```sh
 function encrypt
-    command docker run --rm minivault/encrypt:1.5.0 $argv
+    command docker run --rm minivault/vault:1.6.0 encrypt $argv
 end
 ```
 
 ~/.config/fish/functions/decrypt.fish
 ```sh
 function decrypt
-    command docker run --rm minivault/decrypt:1.5.0 $argv
+    command docker run --rm minivault/vault:1.6.0 decrypt $argv
 end
 ```
 
 ~/.bashrc
 ```sh
-alias encrypt='docker run --rm minivault/encrypt:1.5.0'
-alias decrypt='docker run --rm minivault/decrypt:1.5.0'
+alias encrypt='docker run --rm minivault/vault:1.6.0 encrypt'
+alias decrypt='docker run --rm minivault/vault:1.6.0 decrypt'
 ```
 
 ## for dev
@@ -51,15 +51,8 @@ nodejs
 ```sh
 npm ci
 npm test
-node bin/encrypt.js "mysecret" "mypassword"
-node bin/decrypt.js "cf2c1c92ad24ef5645a7d92c;;8104276cb1a47b0bc69ba2a19115878ff10ee3b4fd6dc28e" "mypassword"
-```
-
-docker-compose 
- ```sh
-docker-compose run --rm test
-docker-compose run --rm encrypt "mysecret" "mypassword"
-docker-compose run --rm decrypt "cf2c1c92ad24ef5645a7d92c;;8104276cb1a47b0bc69ba2a19115878ff10ee3b4fd6dc28e" "mypassword"
+node bin/encrypt.js secret password
+node bin/decrypt.js hash password
 ```
 
 ----
