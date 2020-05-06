@@ -1,8 +1,11 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="Encrypt secrets with password and share with those who know it.">
 		<title>🔒 Minivault</title>
+		<link rel="prefetch" href="vault.html">
 		<style>
 		body {
 			background-color:white;
@@ -33,9 +36,10 @@
 		main { padding:10px}
 		code {
 			margin:10px 0;
-			padding:0;
-			font-size:0.8em;
+			padding:5px;
+			font-size:0.9em;
 			display:block;
+			background:aliceblue;
 		}
 		</style>
 	</head>
@@ -49,15 +53,15 @@
 		</blockquote>
 		<nav>
 			<span>👉 <a href="vault.html">Try here</a> </span>
-			<span>🌐 <a href="https://chrome.google.com/webstore/detail/minivault/ecnpflgglffkleflcmefcmfpenlagjpk" target="_blank">Chrome Extension</a></span>
-			<span>🦊 <a href="https://addons.mozilla.org/en-US/firefox/addon/minivault/?src=search" target="_blank">Firefox Add-Ons</a></span>
+			<span>🌐 <a rel="noopener" href="https://chrome.google.com/webstore/detail/minivault/ecnpflgglffkleflcmefcmfpenlagjpk" target="_blank">Chrome Extension</a></span>
+			<span>🦊 <a rel="noopener" href="https://addons.mozilla.org/en-US/firefox/addon/minivault/?src=search" target="_blank">Firefox Add-Ons</a></span>
 			<span>🐋 Docker<br>
 				<code>docker run minivault/vault:1.6.0 encrypt foo bar</code>
 				<code>docker run minivault/vault:1.6.0 decrypt foo bar</code>
 			</span>
 		</nav>
 		<footer>
-			<a href="https://github.com/hankpillow/minivault/" target="_blank">about this projet</a>
+			<a rel="noopener" href="https://github.com/hankpillow/minivault/" target="_blank">about this projet</a>
 		</footer>
 		<main>
 	</body>

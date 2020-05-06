@@ -1,21 +1,25 @@
-<html>
-	<head>
+<!DOCTYPE html>
+<html lang="en">
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="Encrypt secrets with password and share with those who know it.">
 		<title>🔒 Minivault</title>
 		<style>
 		* {
 			font-size:1.05em;
 			vertical-align:top;
 			font-family: monospace;
+			box-sizing: content-box;
 		}
-		body { font-size:100% }
+		body { 
+			width:320px;
+			font-size:100% ;
+		}
 		form {
 			display:none;
-			width:320px;
+			width:100%;
 			margin:0;
 			margin-top:-1px;
-			padding:10px;
 			border:1px solid black;
 		}
 		footer {
@@ -23,7 +27,7 @@
 			text-align:right;
 			margin:0;
 			padding:10px;
-			width:320px;
+			padding-right:0;
 	 	}
 		footer a {
 			color: black;
@@ -31,24 +35,28 @@
 		textarea,
 		input[type=text],
 		input[type=password]{
-			border:1;
 			display:block;
-			width:100%;
+			border:1px solid lightgray;
+			width:288px;
+			margin:10px;
 			margin-bottom:15px;
 			padding:5px;
 		}
+		input[type=submit]{
+			margin-left:10px
+		}
 		span[name=hash]{
 			display:block;
-			margin:10px 0;
 			word-wrap:anywhere;
 			padding:10px;
 			min-height:1em;
 			max-height:200px;
 			overflow:auto;
 			background:lightgreen;
+			margin:10px;
 		}
 		pre[name=secret] {
-			margin:10px 0;
+			margin:10px;
 			display:block;
 			background:lightgreen;
 			overflow:auto;
@@ -62,6 +70,7 @@
 			margin:0;
 			padding:0;
 			background:none;
+			height:1em;
 		}
 
 		nav a {
@@ -78,6 +87,7 @@
 		}
 		a.-clipboard {
 			float:right;
+			margin-right:10px
 	 	}
 		form.-on{
 			display:block;
@@ -98,13 +108,13 @@
 		</form>
 		<form name="decrypt">
 			<input required  placeholder="hash to decrypt" autocomplete="off" name="hash" type="text" minlength="1" size="16" />
-			<input required  placeholder="password" autocomplete="off" name="password" type="password" minlength="4"/>
+			<input required  placeholder="password" autocomplete="off" name="password" type="password" minlength="1"/>
 			<input type="submit" value="view"/>
 			<a name="copy" class="-clipboard" href="#copy-secret"></a>
 			<pre name="secret"></pre>
 		</form>
-		<footer>powered by <a target="_blank" href="https://github.com/hankpillow/minivault">Minivault (v1.6.0)</a></footer>
-		<script src="minivault.js"></script>
+		<footer>powered by <a rel="noopener" target="_blank" href="https://github.com/hankpillow/minivault">Minivault (v1.6.1)</a></footer>
+		<script src="minivault.js" defer></script>
 		<script src="vault.js" defer></script>
 	</body>
 </html>
