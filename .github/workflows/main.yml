@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run tests
-      run: docker run --rm minivault/minivault:1.6.0 npm test
+      run: docker run --rm minivault/minivault npm test
 
     - name: Pack extension
       uses: actions/upload-artifact@v1

@@ -1,10 +1,14 @@
 # !vim: ft=Dockerfile
-FROM node:12
+FROM node:12-slim
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends build-essential python 
 RUN mkdir /minivault
 WORKDIR /minivault
 COPY extension/ extension
 COPY bin/ bin
-COPY package.json package.json
+COPY package.json .
 RUN npm install "node-webcrypto-ossl@2.0.7"
+RUN apt-get purge --auto-remove -y build-essential python
+RUN rm -rf /var/lib/apt/lists/* 
 WORKDIR /minivault/bin
 CMD node

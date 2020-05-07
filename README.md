@@ -16,43 +16,49 @@ This extension is designed to encrypt short secrets (max 2056 chars) with a pass
 
 Running minivault from command line
 
-### docker
+## 🐋 Docker
+
+* **minivault/vault** designed to encrypt/decrypt (smaller)
+* **minivault/minivaul** designed test everything: cli and extension with headless browser
+
 
  ```sh
-docker run --rm minivault/vault:1.6.0 encrypt secret password
-docker run --rm minivault/vault:1.6.0 decrypt hash password
+docker run --rm minivault/vault encrypt secret password
+docker run --rm minivault/vault decrypt hash password
+docker run --rm localhost/minivault npm run --silent encrypt "foo" "bar"
+docker run --rm localhost/minivault npm run --silent decrypt "foo" "bar"
 ```
 
-### terminal alias
+## 💻 Terminal alias
 
-~/.config/fish/functions/encrypt.fish
-```sh
-function encrypt
-    command docker run --rm minivault/vault:1.6.0 encrypt $argv
-end
-```
+* ~/.config/fish/functions/encrypt.fish
+    ```sh
+    function encrypt
+        command docker run --rm minivault/vault encrypt $argv
+    end
+    ```
 
-~/.config/fish/functions/decrypt.fish
-```sh
-function decrypt
-    command docker run --rm minivault/vault:1.6.0 decrypt $argv
-end
-```
+* ~/.config/fish/functions/decrypt.fish
+    ```sh
+    function decrypt
+        command docker run --rm minivault/vault decrypt $argv
+    end
+    ```
 
-~/.bashrc
-```sh
-alias encrypt='docker run --rm minivault/vault:1.6.0 encrypt'
-alias decrypt='docker run --rm minivault/vault:1.6.0 decrypt'
-```
+* ~/.bashrc
+    ```sh
+    alias encrypt='docker run --rm minivault/vault encrypt'
+    alias decrypt='docker run --rm minivault/vault decrypt'
+    ```
 
-## for dev
+## 🤓 nodejs devs
 
-nodejs
+
 ```sh
 npm ci
 npm test
-node bin/encrypt.js secret password
-node bin/decrypt.js hash password
+node bin/encrypt.js "secret" "password"
+node bin/decrypt.js "hash" "password"
 ```
 
 ----
