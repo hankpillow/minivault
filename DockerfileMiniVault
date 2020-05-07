@@ -1,5 +1,5 @@
 # !vim: ft=Dockerfile
-FROM node:12
+FROM node:12-slim
 
 # Install latest chrome dev package and fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
 # Note: this installs the necessary libs to make the bundled version of Chromium that Puppeteer
@@ -9,9 +9,7 @@ RUN apt-get update \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
     && apt-get update \
-    && apt-get install -y google-chrome-unstable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf \
-      --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get install -y build-essential python google-chrome-unstable fonts-freefont-ttf --no-install-recommends
 
 # If running Docker >= 1.13.0 use docker run's --init arg to reap zombie processes, otherwise
 # uncomment the following lines to have `dumb-init` as PID 1
@@ -43,7 +41,11 @@ RUN npm ci \
     && chown -R pptruser:pptruser /home/pptruser \
     && chown -R pptruser:pptruser /minivault/node_modules
 
+RUN apt-get purge --auto-remove -y build-essential python
+RUN rm -rf /var/lib/apt/lists/* 
+
 # Run everything after as non-privileged user.
 USER pptruser
 
+# keep slim
 CMD ["google-chrome-unstable"]
