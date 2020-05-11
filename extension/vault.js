@@ -1,5 +1,12 @@
 const doc = this.document
 
+const generateHash = () => {
+	//console.log(`chars "${getHash(8)}"`)
+	console.log(`chars num "${getHash(8, true)}"`)
+	//console.log(`chars num sign"${getHash(8, true, true)}"`)
+	console.log(`chars sign"${getHash(8, false, true)}"`)
+}
+
 Array
   .from(doc.querySelectorAll("nav a"))
   .forEach(a => a.onclick = toggleTab)

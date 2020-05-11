@@ -56,6 +56,71 @@ let browser, page
       assert(tDecrypt === secrets.secret, `failed do decrypt old hash:${tDecrypt} with: ${secrets.password}`)
       console.log(`+ old hash: ${secrets.hash} decrypted: ${tDecrypt}`)
 
+      let tHash = await page.evaluate(() => typeof window.getHash)
+      assert(tHash === "function", "unexpected format to encrypt fn")
+      console.log("+ getHash function exists")
+
+      let tHashResult = await page.evaluate(() => {
+        const NUM = HASH_NUM.split("")
+        const SIGN = HASH_SIGN.split("")
+
+        let size = 3
+        let samples = 0
+        let testInteration = 10
+        let error = [] 
+        let result
+
+        while(size < 512) {
+          size++
+          while(--testInteration){
+
+              //only chars
+              result = window.getHash(size)
+              if (result.length !== size) {
+                error.push([size,false, false, result,'wrong length'])
+              } else { ++samples} 
+
+              //and numbers
+              result = window.getHash(size, true)
+              if (result.length !== size){
+                error.push([size,false, false, result,'wrong length'])
+              } else { ++samples} 
+
+              if(!NUM.filter(val=>result.match(val)).length) {
+                error.push([size, true, false, result,'missing number'])
+              } else { ++samples} 
+
+              //and signs
+              result = window.getHash(size, false, true)
+              if (result.length !== size){
+                error.push([size,false, false, result,'wrong length'])
+              }
+
+              if(!SIGN.filter(val=>result.match(new RegExp("\\"+val))).length) {
+                error.push([size, false, true, result,'missing signs'])
+              } else { ++samples} 
+
+              //numbers and signs
+              result = window.getHash(size, true, true)
+              if (result.length !== size){
+                error.push([size,false, false, result,'wrong length'])
+              } else { ++samples} 
+
+              if(!SIGN.filter(val=>result.match(new RegExp("\\"+val))).length) {
+                error.push([size, true, true, result,'missing signs'])
+              } else { ++samples} 
+
+              if(!NUM.filter(val=>result.match(val)).length) {
+                error.push([size, true, true, result,'missing number'])
+              } else { ++samples} 
+            }
+            testInteration = 100
+        }
+        return [error, samples]
+      })
+      assert(tHashResult[0].length === 0, "unexpected result:" + tHashResult.join("\nunexpected format to encrypt fn"))
+      console.log(`+ getHash ${tHashResult[1]} samples created`)
+
       console.log("done")
       await browser.close();
 
