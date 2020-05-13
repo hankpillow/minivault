@@ -43,7 +43,11 @@ let browser, page
       assert(tDecrypt === "function", "unexpected format to encrypt fn")
       console.log("+ decrypt function exists")
 
-      console.log("+ creating new hash...")
+      let tPass = await page.evaluate(() => typeof window.getHash)
+      assert(tDecrypt === "function", "unexpected format to encrypt fn")
+      console.log("+ decrypt function exists")
+
+      console.log("+ encrypting new secret...")
       await page.evaluate((secret, password) => {
         const form = document.documentElement.querySelector("form[name=encrypt]")
         const textarea = form.querySelector("textarea")
@@ -61,11 +65,10 @@ let browser, page
 
       const newHash = await page.evaluate(() => document
           .querySelector("form[name=encrypt] [name=hash]").textContent);
-
       assert(!!newHash.match(/^\w+;;\w+$/gi), `unexpected hash pattern: ${newHash}`)
-      console.log(`+ hash pattern match: ${newHash}`)
+      console.log(`+ encrypt working: ${newHash}`)
 
-      console.log("+ decoding new hash: " + newHash)
+      console.log("+ decoding encrypted hash: " + newHash)
       await page.evaluate((newHash, password) => {
         const form = document.documentElement.querySelector("form[name=decrypt]")
         const hash = form.querySelector("[name=hash]")
@@ -84,7 +87,7 @@ let browser, page
       let decodedHash = await page.evaluate(() => document
           .querySelector("form[name=decrypt] [name=secret]").textContent);
       assert(decodedHash === secrets.secret, `wrong secret: ${decodedHash}`)
-      console.log("+ decoded: "+ decodedHash)
+      console.log("+ decrypt working: "+ decodedHash)
 
       console.log("+ decoding old hash: " + secrets.hash)
       await page.evaluate((oldHash, password) => {
@@ -105,7 +108,25 @@ let browser, page
       decodedHash = await page.evaluate(() => document
         .querySelector("form[name=decrypt] [name=secret]").textContent);
       assert(decodedHash === secrets.secret, `wrong secret: ${decodedHash}`)
-      console.log("+ decoded: "+ decodedHash)
+      console.log("+ decrypt working: "+ decodedHash)
+
+      console.log("+ creating new password: " + newHash)
+      await page.evaluate(() => {
+        const form = document.documentElement.querySelector("form[name=create]")
+        const btn = form.querySelector("[type=submit]")
+        btn.click()
+      })
+
+      console.log("+ waiting for result")
+      await page.waitFor(() => {
+        const hash =  document.querySelector("form[name=create] [name=password]")
+        return hash.textContent.length
+      },{timeout:1000});
+
+      let newPass = await page.evaluate(() => document
+        .querySelector("form[name=create] [name=password]").textContent);
+      assert(newPass.length, `couldnt create new password: ${newPass}`)
+      console.log("+ new password working: "+ decodedHash)
 
       console.log("done")
       await browser.close();

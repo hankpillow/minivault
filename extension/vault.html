@@ -34,19 +34,25 @@
 		footer a {
 			color: black;
 		}
+		input[type=range]{
+			width:100px;
+		}
 		textarea,
 		input[type=text],
 		input[type=password]{
 			display:block;
 			border:1px solid lightgray;
-			width:288px;
-			margin:10px;
-			margin-bottom:15px;
+			width:100%;
+		}
+		label{
 			padding:5px;
+			display:block;
+			margin:10px;
 		}
 		input[type=submit]{
-			margin-left:10px
+			margin-left:15px
 		}
+		span[name=password],
 		span[name=hash]{
 			display:block;
 			word-wrap:anywhere;
@@ -66,6 +72,7 @@
 			padding:5px;
 		}
 
+		span[name=password]:empty,
 		pre[name=secret]:empty,
 		span[name=hash]:empty {
 			display:block;
@@ -79,17 +86,20 @@
 			padding:0.55em;
 			color:black;
 			font-weight:bold;
+			vertical-align:bottom;
+			font-size:0.8em;
 			text-decoration:none;
 			display:inline-block;
-			border-bottom:none;
+			border-bottom:white;
 		}
 		nav a.-on{
+			font-size:1em;
 			border:1px solid black;
 			border-bottom:1px solid white;
 		}
 		a.-clipboard {
 			float:right;
-			margin-right:10px
+			margin-right:15px
 	 	}
 		form.-on{
 			display:block;
@@ -100,23 +110,42 @@
 		<nav>
 			<a href="encrypt" class="-on">🔐 Encrypt</a>
 			<a href="decrypt">🔓 Decrypt</a>
+			<a href="create">🔑 Password</a>
 		</nav>
 		<form name="encrypt" class="-on">
-			<textarea placeholder="secret (max 2056)" autocomplete="off" required name="secret" maxlength="2056" minlength="1" ></textarea>
-			<input placeholder="password (max 256)" autocomplete="off" required name="password" type="text" maxlength="256"  minlength="1"/>
+			<label for="eSecret">secret (max 2056)
+				<textarea id="eSecret" autocomplete="off" required name="secret" maxlength="2056" minlength="1" ></textarea>
+			</label>
+			<label for="ePassword">password (max 256)
+				<input id="ePassword" autocomplete="off" required name="password" type="text" maxlength="256"  minlength="1"/>
+			</label>
 			<input type="submit" value="create"/>
 			<a name="copy" class="-clipboard" href="#copy-hash"></a>
 			<span name="hash"></span>
 		</form>
 		<form name="decrypt">
-			<input required  placeholder="hash to decrypt" autocomplete="off" name="hash" type="text" minlength="1" size="16" />
-			<input required  placeholder="password" autocomplete="off" name="password" type="password" minlength="1"/>
+			<label for="dHash">hash to decrypt
+				<input id="dHash" required  autocomplete="off" name="hash" type="text" minlength="1" size="16" />
+			</label>
+			<label for="dPass">password
+				<input id="dPass" required  autocomplete="off" name="password" type="password" minlength="1"/>
+			</label>
 			<input type="submit" value="view"/>
 			<a name="copy" class="-clipboard" href="#copy-secret"></a>
 			<pre name="secret"></pre>
 		</form>
+		<form name="create">
+			<label for="num"><input id="num" name="withNum" type="checkbox"/>0-9</label>
+			<label for="sign"><input id="sign" name="withSign" type="checkbox"/>!@#$%^&*</label>
+			<label>
+				<input type="range" min="4" max="128" value="8"/>
+				<span name="rangeValue">8 length</span>
+			</label>
+			<input type="submit" value="create" />
+			<a name="copy" class="-clipboard" href="#copy-pass">copy</a>
+			<span name="password"></span>
+		</form>
 		<footer>powered by <a rel="noopener" target="_blank" href="https://github.com/hankpillow/minivault">Minivault</a></footer>
-		<button onClick="generateHash()">random</button>
 		<script src="minivault.js" defer></script>
 		<script src="vault.js" defer></script>
 	</body>

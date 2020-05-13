@@ -1,35 +1,62 @@
 const doc = this.document
 
-const generateHash = () => {
-	//console.log(`chars "${getHash(8)}"`)
-	console.log(`chars num "${getHash(8, true)}"`)
-	//console.log(`chars num sign"${getHash(8, true, true)}"`)
-	console.log(`chars sign"${getHash(8, false, true)}"`)
-}
-
 Array
   .from(doc.querySelectorAll("nav a"))
   .forEach(a => a.onclick = toggleTab)
 
 Array
   .from(doc.querySelectorAll("form"))
-  .forEach(form => form.onsubmit = form.name === "encrypt" ? createHash : decodeHash)
+  .forEach(form => {
+    switch(form.name){
+      case "encrypt":
+        form.onsubmit = createHash
+        break
+      case "decrypt":
+        form.onsubmit = decodeHash
+        break
+      case "create":
+        form.onsubmit = createPassword
+        break
+    }
+  })
 
 function toggleTab(event) {
   event.preventDefault()
   const klass = "-on"
+  const target = event.target.getAttribute("href")
   Array.from(
     event.target.parentNode.querySelectorAll("a")
   ).forEach(a => {
-    a.classList.toggle(klass)
+
     const targetTab = a.getAttribute("href")
-    const qs = targetTab === "encrypt" ? "[name=hash]" : "[name=secret]"
     const form = doc.querySelector(`form[name=${targetTab}]`)
     const copy = form.querySelector("[name=copy]")
-    form.classList.toggle(klass)
-    form.reset()
-    copy.textContent = ""
-    form.querySelector(qs).textContent = ""
+
+    if (copy) copy.textContent = ""
+
+    if (target === targetTab) {
+      a.classList.add(klass)
+      form.classList.add(klass)
+    } else  {
+      a.classList.remove(klass)
+      form.classList.remove(klass)
+    }
+    switch(targetTab){
+      case  "encrypt":
+        form.reset()
+        form.querySelector("[name=hash]").textContent = ""
+        break
+      case "decrypt":
+        form.reset()
+        form.querySelector("[name=secret]").textContent = ""
+        break
+      case "create":
+        form.querySelector("[name=password]").textContent = ""
+        const range = doc.querySelector("form[name=create] input[type=range]")
+        const rangeValue = doc.querySelector("form[name=create] span[name=rangeValue]")
+        range.oninput = e => rangeValue.textContent = e.target.value + " length"
+        break
+    }
   })
 }
 
@@ -93,3 +120,17 @@ async function decodeHash(event) {
   }
   form.reset()
 }
+
+function createPassword(event) {
+  event.preventDefault()
+
+  const withNum = event.target.querySelector("[name=withNum]").checked
+  const withSign = event.target.querySelector("[name=withSign]").checked
+  const withSize = parseInt(event.target.querySelector("[type=range]").value)
+  const psw = getHash(withSize, withNum, withSign) 
+  const copy = event.target.querySelector("[name=copy]")
+
+  event.target.querySelector("[name=password]").textContent = psw
+  if (window === window.top) { copyToClipboard(psw, copy) }
+}
+

@@ -39,14 +39,18 @@ function shuffle (array) {
 	return array;
 }
 
+function randomRange(min, max) { // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 function getHash (length, withNum, withSigns) {
 
 	if (length <= 3 ) return null
 	length += 1
 
   const slice = Math.ceil(length / ((withNum ? 1 : 0) + (withSigns ? 1 : 0) + 1))
-  const numSize = withNum ? Math.min(slice, Math.round(1 + (Math.random() * slice))) : 0
-  const signSize = withSigns ? Math.min(slice, Math.round(1 + (Math.random() * slice))) : 0
+  const numSize = withNum ? randomRange(1,slice * .40) : 0
+  const signSize = withSigns ? randomRange(1,slice * .40) : 0
   const size = (length - (numSize + signSize))
 
   const numList = []
@@ -59,7 +63,7 @@ function getHash (length, withNum, withSigns) {
     }
     else if (withSigns && signList.length != signSize){
       signList.push(getRandom(HASH_SIGN.toString()))
-    } 
+    }
     else if (charList.length != size){
       charList.push(getRandom(HASH_CHAR.toString()))
     }
