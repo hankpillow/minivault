@@ -1,6 +1,9 @@
 const mode = 'AES-GCM';
 const length = 256;
 const	ivLength = 12;
+const HASH_NUM = '0123456789'
+const HASH_SIGN = '!@#$%^&*'
+const HASH_CHAR = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
 function fromHexaToUint8Array ( hexString ) {
   return new Uint8Array(hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
@@ -14,7 +17,64 @@ function fromArrayBufferToHexa (buff) {
   return [].map.call(new Uint8Array(buff), b => ('00' + b.toString(16)).slice(-2)).join('');
 }
 
-async function genEncryptionKey (password, mode, length, crypto) {
+function getRandom (characters) {
+  if (!!characters && typeof characters.charAt == "function") {
+    return characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return null
+}
+
+function shuffle (array) {
+  if (!array) return null
+  if (!array.length) return array
+	let counter = array.length;
+  let temp, index
+	while (counter > 0) {
+		index = Math.floor(Math.random() * counter);
+		counter--;
+		temp = array[counter];
+		array[counter] = array[index];
+		array[index] = temp;
+	}
+	return array;
+}
+
+function randomRange(min, max) { // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function getHash (length, withNum, withSigns) {
+
+	if (length <= 3 ) return null
+	length += 1
+
+  const slice = Math.ceil(length / ((withNum ? 1 : 0) + (withSigns ? 1 : 0) + 1))
+  const numSize = withNum ? randomRange(1,slice * .40) : 0
+  const signSize = withSigns ? randomRange(1,slice * .40) : 0
+  const size = (length - (numSize + signSize))
+
+  const numList = []
+  const signList = []
+  const charList = []
+
+  while(--length){
+    if (withNum && numList.length != numSize){
+      numList.push(getRandom(HASH_NUM.toString()))
+    }
+    else if (withSigns && signList.length != signSize){
+      signList.push(getRandom(HASH_SIGN.toString()))
+    }
+    else if (charList.length != size){
+      charList.push(getRandom(HASH_CHAR.toString()))
+    }
+  }
+
+	return shuffle([].concat(
+    numList, charList, signList)
+  ).join("")
+}
+
+async function genEncryptionKey (password, length, crypto) {
   var algo = {
     name: 'PBKDF2',
     hash: 'SHA-256',
@@ -35,7 +95,7 @@ async function encrypt (text, password, crypto) {
     length: length,
     iv: crypto.getRandomValues(new Uint8Array(ivLength))
   };
-  const key = await genEncryptionKey(password, mode, length, crypto);
+  const key = await genEncryptionKey(password, length, crypto);
   const encoded = new TextEncoder().encode(text);
   const encripted = {
     cipherText: await crypto.subtle.encrypt(algo, key, encoded),
@@ -55,7 +115,7 @@ async function decrypt (hash, password, crypto) {
     length: length,
     iv: encrypted.iv
   };
-  var key = await genEncryptionKey(password, mode, length, crypto);
+  var key = await genEncryptionKey(password, length, crypto);
   var decrypted = await crypto.subtle.decrypt(algo, key, encrypted.cipherText);
   return new TextDecoder().decode(decrypted);
 }
@@ -63,7 +123,8 @@ async function decrypt (hash, password, crypto) {
 if (typeof module !== "undefined"){
   module.exports = {
     encrypt: encrypt,
-    decrypt: decrypt
+    decrypt: decrypt,
+    getHash: getHash
   }
 }
 
