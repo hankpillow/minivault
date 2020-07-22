@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="Encrypt secrets with password and share with those who know it.">
+		<meta name="description" content="Encrypt secrets with a password and share it safely!">
 		<link rel="shortcut icon" href="assets/16.ico" />
 		<link rel="icon" type="image/png" href="assets/16.ico" />
 		<link rel="prefetch" href="vault.html">
@@ -48,10 +48,14 @@
 	<body>
 		<main>
 		<h1>🔒 Minivault</h1>
-		<p>Encrypt secrets with password and share with those who know it.</p>
-		<p>This extension is designed to encrypt short secrets (max 2056 chars) with a password to create a unique hash that only with the same password you can decrypt.  </p>
+		<p>
+			Set a password with your friends/team and use it to encrypt data and share securely.
+		</p>
+		<p>
+			It uses the built-in <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/crypto" target="_blank" rel="noopener">crypto</a> API available on the browser - zero external services or internet required (using the browser extension).
+		</p>
 		<blockquote>
-			No data is kept or sent!
+			No data/cookie is kept or sent by the <a href="vault.html">vault</a>!
 		</blockquote>
 		<nav>
 			<span>👉 <a href="vault.html">Try here</a> </span>
@@ -63,8 +67,15 @@
 			</span>
 		</nav>
 		<footer>
-			<a rel="noopener" href="https://github.com/hankpillow/minivault/" target="_blank">about this projet</a>
+			<a rel="noopener" href="https://github.com/hankpillow/minivault/" target="_blank">about the projet</a>
 		</footer>
 		<main>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163048716-1"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-163048716-1');
+		</script>
 	</body>
 </html>
