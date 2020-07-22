@@ -49,25 +49,29 @@
 		<main>
 		<h1>🔒 Minivault</h1>
 		<p>
-			Set a password with your friends/team and use it to encrypt data and share securely.
+			The Minivault is a web app/browser extension designed to help to share sensitive data securely.
 		</p>
 		<p>
-			It uses the built-in <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/crypto" target="_blank" rel="noopener">crypto</a> API available on the browser - zero external services or internet required (using the browser extension).
+			Set a secret with your friends/team and use it to encrypt and share your data!
 		</p>
 		<blockquote>
 			No data/cookie is kept or sent by the <a href="vault.html">vault</a>!
 		</blockquote>
-		<nav>
-			<span>👉 <a href="vault.html">Try here</a> </span>
+		<small>
+			It uses <strong>only the native</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/crypto" target="_blank" rel="noopener">Crypto API</a> available in the browser - zero external services or internet required (using the browser extension).
+		</small>
+		<nav style="font-size: 120%;">
+			<span>👉 Try the <a href="vault.html">Minivault</a></span>
 			<span>🌐 <a rel="noopener" href="https://chrome.google.com/webstore/detail/minivault/ecnpflgglffkleflcmefcmfpenlagjpk" target="_blank">Chrome Extension</a></span>
 			<span>🦊 <a rel="noopener" href="https://addons.mozilla.org/en-US/firefox/addon/minivault/?src=search" target="_blank">Firefox Add-Ons</a></span>
-			<span>🐋 Docker<br>
-				<code>docker run minivault/vault encrypt "foo" "bar"</code>
-				<code>docker run minivault/vault decrypt "foo" "bar"</code>
-			</span>
 		</nav>
-		<footer>
-			<a rel="noopener" href="https://github.com/hankpillow/minivault/" target="_blank">about the projet</a>
+		<p>For devs:</p>
+		<span>🐋 Docker<br>
+			<code>docker run minivault/vault encrypt "foo" "bar"</code>
+			<code>docker run minivault/vault decrypt "foo" "bar"</code>
+		</span>
+		<footer style="text-align: center;width: 100%;margin-top: 2rem;" >
+			source code <a rel="noopener" href="https://github.com/hankpillow/minivault/" target="_blank">here</a>
 		</footer>
 		<main>
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163048716-1"></script>
