@@ -1,0 +1,22 @@
+{
+    "short_name": "Minivault",
+    "name": "Minivault",
+    "description": "Encrypt secrets with a password and share it safely!",
+    "icons": [
+      {
+        "src": "assets/128.png",
+        "type": "image/png",
+        "sizes": "128x128"
+      },
+      {
+        "src": "/assets/48.png",
+        "type": "image/png",
+        "sizes": "48x48"
+      }
+    ],
+    "start_url": "https://minivault.netlify.app/vault",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#ffffff"
+  }
