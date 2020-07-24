@@ -6,6 +6,7 @@
 		<meta name="description" content="Encrypt secrets with a password and share it safely!">
 		<link rel="shortcut icon" href="assets/16.ico" />
 		<link rel="icon" type="image/png" href="assets/16.ico" />
+		<link rel="manifest" href="/manifest.webmanifest">
 		<link rel="prefetch" href="vault.html">
 		<title>Minivault</title>
 		<style>
@@ -39,7 +40,7 @@
 		code {
 			margin:10px 0;
 			padding:5px;
-			font-size:0.9em;
+			font-size:0.8em;
 			display:block;
 			background:aliceblue;
 		}
@@ -49,10 +50,10 @@
 		<main>
 		<h1>🔒 Minivault</h1>
 		<p>
-			The Minivault is a web app/browser extension designed to help to share sensitive data securely.
+			The Minivault is a web-app/browser-extension tool designed to help to share sensitive data securely.
 		</p>
 		<p>
-			Set a secret with your friends/team and use it to encrypt and share your data!
+			Set a secret with your friends or team and use it to encrypt and share your data!
 		</p>
 		<blockquote>
 			No data/cookie is kept or sent by the <a href="vault.html">vault</a>!
@@ -61,14 +62,15 @@
 			It uses <strong>only the native</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/crypto" target="_blank" rel="noopener">Crypto API</a> available in the browser - zero external services or internet required (using the browser extension).
 		</small>
 		<nav style="font-size: 120%;">
-			<span>👉 Try the <a href="vault.html">Minivault</a></span>
+			<span>👉 Try the <a href="vault.html">Minivault</a>*</span>
 			<span>🌐 <a rel="noopener" href="https://chrome.google.com/webstore/detail/minivault/ecnpflgglffkleflcmefcmfpenlagjpk" target="_blank">Chrome Extension</a></span>
 			<span>🦊 <a rel="noopener" href="https://addons.mozilla.org/en-US/firefox/addon/minivault/?src=search" target="_blank">Firefox Add-Ons</a></span>
 		</nav>
+		<i>* The minivault web works without internet connection when addded to the Home Screen - Android only</i>
 		<p>For devs:</p>
 		<span>🐋 Docker<br>
-			<code>docker run minivault/vault encrypt "foo" "bar"</code>
-			<code>docker run minivault/vault decrypt "foo" "bar"</code>
+			<code>docker run minivault/vault encrypt "secret" "my-data"</code>
+			<code>docker run minivault/vault decrypt "secret" "encrypted-data"</code>
 		</span>
 		<footer style="text-align: center;width: 100%;margin-top: 2rem;" >
 			source code <a rel="noopener" href="https://github.com/hankpillow/minivault/" target="_blank">here</a>

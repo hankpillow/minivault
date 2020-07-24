@@ -1,12 +1,12 @@
 ## 🔒 Minivault
 
-Encrypt secrets with password and share with those who know it.
+The Minivault is a web-app/browser-extension tool designed to help to share sensitive data securely.
 
-This extension is designed to encrypt short secrets (max 2056 chars) with a password to create a unique hash that only with the same password you can decrypt.
+Set a secret with your friends or team and use it to encrypt and share your data!
 
-> No data is kept or sent to nowhere! 
+> No data/cookie is kept or sent by the <a href="vault.html">vault</a>!
 
-* [Web version](https://minivault.netlify.app/)
+* [Web version](https://minivault.netlify.app/vault) (add as home screen on your phone and it works offline as well)
 
 * [Google Chrome Extension](https://chrome.google.com/webstore/detail/minivault/ecnpflgglffkleflcmefcmfpenlagjpk)
 
